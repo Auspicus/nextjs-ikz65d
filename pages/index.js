@@ -1,11 +1,20 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 
-export default function Home() {
+export async function getServerSideProps() {
+  const res = await fetch('https://httpbin.org/get');
+  const data = await res.json();
+
+  return {
+    props: { data }
+  };
+}
+
+export default function Home({ data }) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Create Next App {data.origin}</title>
       </Head>
 
       <main className={styles.main}>
